@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consulta de Veículos - PROTERCAR</title>
   <style>
+    /* ===== ESTILO GERAL ===== */
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f6f8;
-      color: #333;
+      background: linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 100%);
+      color: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
+    /* ===== CABEÇALHO ===== */
     header {
-      background-color: #fff;
+      background: #fff;
       text-align: center;
-      padding: 30px 10px 10px 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 25px 10px 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     header img {
@@ -25,94 +30,201 @@
       height: auto;
     }
 
+    /* ===== CONTAINER PRINCIPAL ===== */
     main {
-      max-width: 800px;
-      margin: 30px auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      max-width: 1100px;
+      width: 90%;
+      margin: 40px auto;
+      background: #121212;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.1);
+      padding: 40px;
+      border: 1px solid rgba(255, 204, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    main:hover {
+      box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
     }
 
     h1 {
       text-align: center;
-      color: #222;
+      color: #ffcc00;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* ===== FORMULÁRIO ===== */
+    .form-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 25px;
-      font-size: 1.6rem;
     }
 
     input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      flex: 1;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #333;
       font-size: 1rem;
-      margin-bottom: 20px;
-      box-sizing: border-box;
+      background-color: #1e1e1e;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ffcc00;
+      box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
     }
 
     button {
-      width: 100%;
-      background-color: #004aad;
-      color: white;
+      background: linear-gradient(90deg, #e63946, #ffcc00);
       border: none;
-      padding: 12px;
-      border-radius: 8px;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 1rem;
-      transition: background-color 0.3s ease;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #003b8a;
+      transform: scale(1.03);
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+    }
+
+    .btn-nova-busca {
+      display: none;
+      margin-left: auto;
+      background: linear-gradient(90deg, #555, #777);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-nova-busca:hover {
+      background: linear-gradient(90deg, #666, #999);
+      transform: scale(1.02);
+    }
+
+    /* ===== ALERTAS ===== */
+    .alertas-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+      position: relative;
     }
 
     .alerta {
-      padding: 15px;
+      padding: 15px 20px;
       border-radius: 10px;
-      margin-bottom: 20px;
       font-weight: 500;
       display: none;
+      border-left: 5px solid;
+      animation: fadeIn 0.5s ease;
     }
 
     .alerta-info {
-      background-color: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
+      background-color: rgba(255, 204, 0, 0.1);
+      color: #ffcc00;
+      border-left-color: #ffcc00;
     }
 
     .alerta-critico {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
+      background-color: rgba(230, 57, 70, 0.1);
+      color: #e63946;
+      border-left-color: #e63946;
+    }
+
+    /* ===== RESULTADOS ===== */
+    #resultado {
+      margin-top: 25px;
+      animation: fadeIn 0.6s ease;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     th, td {
-      padding: 10px;
+      padding: 12px;
       text-align: left;
-      border-bottom: 1px solid #ddd;
     }
 
     th {
-      background-color: #004aad;
-      color: white;
+      background-color: #e63946;
+      color: #fff;
     }
 
     td {
-      background-color: #fafafa;
+      background-color: #1e1e1e;
+      color: #f4f4f4;
+      border-bottom: 1px solid #333;
     }
 
     .nenhum-resultado {
       text-align: center;
-      color: #888;
+      color: #aaa;
       margin-top: 20px;
       font-style: italic;
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #ffcc00;
+      animation: blink 1s infinite alternate;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+
+    /* ===== RODAPÉ ===== */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #777;
+      background: #0d0d0d;
+      border-top: 1px solid #222;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 25px;
+      }
+
+      .form-container {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .btn-nova-busca {
+        width: 100%;
+        margin-top: 10px;
+      }
     }
   </style>
 </head>
@@ -123,25 +235,32 @@
   </header>
 
   <main>
-    <h1>Consulta de Veículos</h1>
-    <input type="text" id="busca" placeholder="Digite o modelo do veículo (ex: Argo 2010)" />
-    <button onclick="buscar()">Buscar</button>
+    <h1>Consulta de Veículos PROTERCAR</h1>
 
-    <!-- ALERTAS -->
-    <div id="alertaInfo" class="alerta alerta-info">
-      ⚠️ <b>Alerta informativo:</b><br>
-      Não trabalhamos com carro a diesel.<br>
-      Em caso de carro reserva, <b>INFORMAR acréscimo de R$20,00</b> na parcela mensal.
+    <div class="form-container">
+      <input type="text" id="busca" placeholder="Digite o modelo do veículo (ex: Argo 2010)" autofocus />
+      <button onclick="buscar()">Buscar</button>
     </div>
 
-    <div id="alertaCritico" class="alerta alerta-critico">
-      🚫 <b>Alerta crítico:</b><br>
-      O serviço de rastreamento é incluso para veículos tabela FIPE acima de 30 mil, mediante análise interna e não deve ser cobrado separadamente.
+    <div class="alertas-container">
+      <div id="alertaInfo" class="alerta alerta-info">
+        ⚠️ <b>Informação:</b> Não trabalhamos com carro a diesel.  
+        Em caso de carro reserva, <b>acréscimo de R$20,00</b> na parcela mensal.
+      </div>
+
+      <div id="alertaCritico" class="alerta alerta-critico">
+        🚫 <b>Aviso:</b> O rastreamento é incluso para veículos tabela FIPE acima de R$30 mil, mediante análise interna, e não deve ser cobrado separadamente.
+      </div>
+
+      <button id="novaBuscaBtn" class="btn-nova-busca" onclick="novaBusca()">Nova busca</button>
     </div>
 
-    <!-- RESULTADOS -->
     <div id="resultado"></div>
   </main>
+
+  <footer>
+    © 2025 PROTERCAR • Sistema de Consulta de Veículos
+  </footer>
 
   <script>
     const url = "https://script.google.com/macros/s/AKfycbyoCEyaxxH6oaS2t0nqrwoabFNLhMjC6Hg1e5VtyPr3i65zVL23p8rUSmr97pie3YdM/exec?busca=";
@@ -156,15 +275,19 @@
       const divResultado = document.getElementById("resultado");
       const alertaInfo = document.getElementById("alertaInfo");
       const alertaCritico = document.getElementById("alertaCritico");
+      const btnNovaBusca = document.getElementById("novaBuscaBtn");
 
       divResultado.innerHTML = "";
       alertaInfo.style.display = "none";
       alertaCritico.style.display = "none";
+      btnNovaBusca.style.display = "none";
 
       if (!termo) {
         divResultado.innerHTML = "<p class='nenhum-resultado'>Digite algo para buscar.</p>";
         return;
       }
+
+      divResultado.innerHTML = "<p class='loading'>🔄 Buscando informações...</p>";
 
       try {
         const resposta = await fetch(url + encodeURIComponent(termo));
@@ -175,6 +298,7 @@
         } else {
           alertaInfo.style.display = "block";
           alertaCritico.style.display = "block";
+          btnNovaBusca.style.display = "inline-block";
 
           let tabela = `
             <table>
@@ -206,8 +330,17 @@
           divResultado.innerHTML = tabela;
         }
       } catch (erro) {
-        divResultado.innerHTML = `<p class='nenhum-resultado'>Erro ao buscar dados. Verifique a conexão.</p>`;
+        divResultado.innerHTML = `<p class='nenhum-resultado'>Erro ao buscar dados. Verifique sua conexão.</p>`;
       }
+    }
+
+    function novaBusca() {
+      document.getElementById("busca").value = "";
+      document.getElementById("resultado").innerHTML = "";
+      document.getElementById("alertaInfo").style.display = "none";
+      document.getElementById("alertaCritico").style.display = "none";
+      document.getElementById("novaBuscaBtn").style.display = "none";
+      document.getElementById("busca").focus();
     }
   </script>
 </body>
