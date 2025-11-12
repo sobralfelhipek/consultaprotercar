@@ -7,17 +7,17 @@
     body {
       font-family: Arial, sans-serif;
       margin: 40px;
-      background-color: #f5f7fa;
+      background-color: #f4f6f8;
     }
     h2 {
       color: #333;
     }
     input {
-      width: 250px;
+      width: 260px;
       padding: 8px;
       margin-right: 10px;
       border-radius: 4px;
-      border: 1px solid #aaa;
+      border: 1px solid #bbb;
     }
     button {
       padding: 8px 14px;
@@ -26,9 +26,10 @@
       color: white;
       border: none;
       border-radius: 4px;
+      transition: background 0.3s;
     }
     button:hover {
-      background-color: #005fcb;
+      background-color: #005fcc;
     }
     .resultado {
       margin-top: 20px;
@@ -36,7 +37,11 @@
       border: 1px solid #ddd;
       border-radius: 5px;
       background: #fff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .erro {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -56,18 +61,18 @@
       container.innerHTML = "<p>Buscando...</p>";
 
       if (!busca) {
-        container.innerHTML = "<p style='color:red;'>Digite algo para buscar.</p>";
+        container.innerHTML = "<p class='erro'>Digite algo para buscar.</p>";
         return;
       }
 
-      const url = 'https://script.google.com/macros/s/AKfycbx6DwD2gUVXsZTcgZmCOxJUgWKow4ENtE65JB47iIPX57jLA3Swk14wXkxtm7Tfs0yL/exec?busca=' + encodeURIComponent(busca);
+      const url = 'https://script.google.com/macros/s/AKfycbzawqqM2pyO1dM-q2VPzBzlGXV5dXOBQhBSnEz3vU9iKt_h0w_JCGnbmaWhTvTNQwmo/exec?busca=' + encodeURIComponent(busca);
 
       try {
         const resp = await fetch(url);
         const data = await resp.json();
 
         if (data[0].erro) {
-          container.innerHTML = `<p style="color:red;">${data[0].erro}</p>`;
+          container.innerHTML = `<p class='erro'>${data[0].erro}</p>`;
         } else {
           let html = "<h3>Resultados encontrados:</h3>";
           data.forEach(item => {
@@ -82,7 +87,7 @@
           container.innerHTML = html;
         }
       } catch (err) {
-        container.innerHTML = `<p style="color:red;">Erro ao buscar dados: ${err.message}</p>`;
+        container.innerHTML = `<p class='erro'>Erro ao buscar dados: ${err.message}</p>`;
       }
     }
   </script>
