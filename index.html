@@ -1,1 +1,229 @@
-a
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Protercar - Proteção Veicular</title>
+  <link rel="icon" type="image/png" href="PR Protercar2.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta rápida de veículos Protercar Proteção Veicular">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 10%, #a00000 30%, #d40000 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #222;
+    }
+
+    header {
+      background-color: #fff;
+      width: 100%;
+      text-align: center;
+      padding: 40px 20px 25px 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      border-bottom: 4px solid #d10000;
+    }
+
+    header img {
+      width: 210px;
+      max-width: 90%;
+      display: block;
+      margin: 0 auto 10px auto;
+      animation: fadeIn 1s ease-out;
+    }
+
+    header h1 {
+      color: #a00000;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    header h3 {
+      color: #444;
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin-top: 0;
+      font-size: 16px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto 60px auto;
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .container h2 {
+      color: #a00000;
+      margin-bottom: 12px;
+    }
+
+    input {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-right: 8px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      outline: none;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      border-color: #d10000;
+      box-shadow: 0 0 5px rgba(209, 0, 0, 0.3);
+    }
+
+    button {
+      padding: 10px 18px;
+      background: linear-gradient(90deg, #d10000, #ffb800);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .resultado {
+      margin-top: 25px;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+      text-align: left;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .resultado p {
+      margin: 4px 0;
+    }
+
+    .erro {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #f8f8f8;
+      font-size: 14px;
+      background: linear-gradient(90deg, #a00000, #d10000, #ffb800);
+      width: 100%;
+      margin-top: auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="PR Protercar2.png" alt="Logo Protercar">
+    <h1>PROTERCAR</h1>
+    <h3>Proteção Veicular</h3>
+  </header>
+
+  <div class="container">
+    <h2>Consulta de Veículos</h2>
+    <p>Digite o nome ou parte do nome do veículo (ex: <i>Argo 2010</i> ou <i>Civic</i>):</p>
+
+    <input id="busca" placeholder="Ex: argo 2010">
+    <button onclick="buscar()">Buscar</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <footer>
+    © 2025 Protercar Proteção Veicular — Todos os direitos reservados
+  </footer>
+
+  <script>
+    // Formata valores monetários no padrão contábil brasileiro (1.000,00)
+    function formatarMoeda(valor) {
+      if (!valor || isNaN(valor)) return "0,00";
+      return parseFloat(valor)
+        .toFixed(2)
+        .replace('.', ',')
+        .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    async function buscar() {
+      const busca = document.getElementById('busca').value.trim();
+      const container = document.getElementById('resultado');
+      container.innerHTML = "<p>Buscando...</p>";
+
+      if (!busca) {
+        container.innerHTML = "<p class='erro'>Digite algo para buscar.</p>";
+        return;
+      }
+
+      const url = 'https://script.google.com/macros/s/AKfycbzawqqM2pyO1dM-q2VPzBzlGXV5dXOBQhBSnEz3vU9iKt_h0w_JCGnbmaWhTvTNQwmo/exec?busca=' + encodeURIComponent(busca);
+
+      try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+
+        if (data[0].erro) {
+          container.innerHTML = `<p class='erro'>${data[0].erro}</p>`;
+        } else {
+          let html = "<h3>Resultados encontrados:</h3>";
+          data.forEach(item => {
+            const mensalidade = formatarMoeda(item.mensalidade);
+            const franquia = formatarMoeda(item.franquia);
+
+            html += `
+              <div class="resultado">
+                <p><b>Veículo:</b> ${item.veiculo}</p>
+                <p><b>Mensalidade:</b> R$ ${mensalidade}</p>
+                <p><b>Franquia:</b> R$ ${franquia}</p>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+        }
+      } catch (err) {
+        container.innerHTML = `<p class='erro'>Erro ao buscar dados: ${err.message}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
