@@ -1,136 +1,113 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consulta de Veículos - PROTERCAR</title>
 
   <style>
-    * {
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+      color: #ffcc00;
+      background: linear-gradient(to bottom, #ffffff, #ffcccc, #ff0000);
+      background-attachment: fixed;
+      min-height: 100vh;
     }
 
-    body {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      background: linear-gradient(180deg, #2b0000 0%, #4a0000 35%, #7a0000 60%, #9a0000 80%, #c70000 100%);
-      overflow-x: hidden;
-      color: #ffdd55;
-    }
-
-    /* ---------- GRADIENTE ANIMADO SOBREPOSTO ---------- */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(-45deg, rgba(255, 0, 0, 0.5), rgba(255, 170, 0, 0.3), rgba(255, 0, 0, 0.5), rgba(255, 200, 0, 0.3));
-      background-size: 400% 400%;
-      animation: moverGradiente 12s ease infinite;
-      z-index: 0;
-      opacity: 0.8;
-    }
-
-    @keyframes moverGradiente {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* ---------- CABEÇALHO ---------- */
     header {
-      position: relative;
-      z-index: 2;
-      width: 100%;
+      background: linear-gradient(to bottom, #fff, #ffd6d6, #ff4d4d);
       text-align: center;
-      padding: 35px 0 25px;
-      background: linear-gradient(180deg, #ffffff 0%, #ffd6d6 40%, #ff6b6b 75%, #b30000 100%);
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
-      border-bottom: 2px solid rgba(255, 0, 0, 0.3);
+      padding: 30px 10px 10px 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     header img {
-      width: 260px;
+      max-width: 260px;
       height: auto;
-      filter: drop-shadow(0 0 8px rgba(255, 200, 0, 0.6));
     }
 
-    /* ---------- CONTEÚDO PRINCIPAL ---------- */
     main {
-      position: relative;
-      z-index: 2;
-      width: 90%;
       max-width: 900px;
-      padding: 35px 30px;
-      margin-top: 25px;
-      border-radius: 20px;
-      background: rgba(0, 0, 0, 0.7);
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 1s ease-in-out;
+      margin: 40px auto;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      color: #ffcc00;
+      position: relative;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 2rem;
-      color: #ffec80;
       text-align: center;
+      font-size: 1.8rem;
+      color: #fff;
       margin-bottom: 25px;
-      text-shadow: 0 0 10px rgba(255, 220, 0, 0.6);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
     }
 
-    #buscaContainer {
-      display: flex;
-      justify-content: center;
+    input {
       width: 100%;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    input[type="text"] {
-      width: 70%;
-      padding: 10px;
-      border: none;
+      padding: 12px;
       border-radius: 8px;
+      border: 1px solid #ffcc00;
+      background-color: #1a1a1a;
+      color: #fff;
       font-size: 1rem;
-      outline: none;
-      color: #222;
+      margin-bottom: 15px;
+      box-sizing: border-box;
     }
 
     button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #ffae00, #ff3c00);
+      background-color: #ff0000;
       color: #fff;
-      font-weight: bold;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
+      font-size: 1rem;
+      transition: 0.3s ease;
     }
 
     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 200, 0, 0.7);
+      background-color: #cc0000;
+      transform: scale(1.03);
     }
 
     #novaBuscaBtn {
       display: none;
-      margin-top: 15px;
-      background: linear-gradient(90deg, #ff4e00, #ffb300);
+      background-color: #ffcc00;
+      color: #000;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .alerta {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+      display: none;
+      font-weight: 500;
+    }
+
+    .alerta-info {
+      background-color: rgba(255, 255, 0, 0.1);
+      border: 1px solid #ffcc00;
+      color: #fff;
+    }
+
+    .alerta-critico {
+      background-color: rgba(255, 0, 0, 0.15);
+      border: 1px solid #ff6666;
+      color: #fff;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
-      color: #ffec80;
+      margin-top: 25px;
     }
 
     th, td {
@@ -138,87 +115,104 @@
       text-align: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
+
     td:first-child, th:first-child {
       text-align: left;
       padding-left: 20px;
     }
+
     th {
-      background: rgba(255, 0, 0, 0.3);
+      background-color: rgba(255, 0, 0, 0.8);
+      color: #fff;
+      text-transform: uppercase;
     }
 
-    tr:hover {
-      background: rgba(255, 255, 0, 0.1);
-    }
-
-    .alerta {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 10px;
-      width: 100%;
-      font-size: 0.95rem;
-      text-align: left;
-    }
-
-    .alerta-info {
-      background: rgba(255, 200, 0, 0.15);
-      border-left: 5px solid #ffca28;
-      color: #ffef91;
-    }
-
-    .alerta-critico {
-      background: rgba(255, 0, 0, 0.2);
-      border-left: 5px solid #ff3c00;
-      color: #ffbcbc;
+    td {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffcc00;
     }
 
     .nenhum-resultado {
-      color: #ffcb00;
-      font-weight: bold;
       text-align: center;
+      color: #fff;
       margin-top: 20px;
-    }
-
-    .fade-in {
-      animation: fadeIn 0.7s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      font-style: italic;
     }
 
     .loader {
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid #ffb300;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-left-color: #ffcc00;
       border-radius: 50%;
       width: 40px;
       height: 40px;
       animation: spin 1s linear infinite;
-      margin: 0 auto 10px auto;
+      margin: 0 auto;
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- RESPONSIVIDADE --- */
+    @media (max-width: 768px) {
+      main {
+        padding: 20px 10px;
+      }
+
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: #ffcc00 transparent;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        text-align: left !important;
+        padding: 8px;
+        font-size: 0.9rem;
+        border: none;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #ffcc00;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <img src="PR Protercar2.png" alt="Logomarca Protercar">
+    <img src="PR Protercar2.png" alt="Logomarca Protercar" />
   </header>
 
   <main>
     <h1>Consulta de Veículos</h1>
 
     <div id="buscaContainer">
-      <input type="text" id="busca" placeholder="Digite o modelo do veículo (ex: Voyage 2015)">
+      <input type="text" id="busca" placeholder="Digite o modelo do veículo (ex: Voyage 2015)" />
       <button onclick="buscar()">Buscar</button>
     </div>
 
-    <div style="display: flex; justify-content: flex-end; width: 100%;">
+    <div style="display: flex; justify-content: flex-end;">
       <button id="novaBuscaBtn" onclick="novaBusca()">Nova busca</button>
     </div>
 
@@ -241,7 +235,7 @@
 
     function formatarValor(valor) {
       if (!valor || isNaN(valor)) return valor;
-      return parseFloat(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+      return parseFloat(valor).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     async function buscar() {
@@ -276,7 +270,7 @@
         const data = await resposta.json();
 
         if (data[0].erro) {
-          divResultado.innerHTML = `<p class='nenhum-resultado fade-in'>${data[0].erro}</p>`;
+          divResultado.innerHTML = `<p class='nenhum-resultado'>${data[0].erro}</p>`;
           novaBuscaBtn.style.display = "block";
           return;
         }
@@ -285,39 +279,36 @@
         alertaCritico.style.display = "block";
 
         let tabela = `
-          <div class="fade-in">
-            <table>
-              <thead>
-                <tr>
-                  <th>VEÍCULO</th>
-                  <th>MENSALIDADE (R$)</th>
-                  <th>FRANQUIA (R$)</th>
-                  <th>MARCA</th>
-                  <th>TIPO</th>
-                </tr>
-              </thead>
-              <tbody>
+          <table>
+            <thead>
+              <tr>
+                <th>VEÍCULO</th>
+                <th>MENSALIDADE (R$)</th>
+                <th>FRANQUIA (R$)</th>
+                <th>MARCA</th>
+                <th>TIPO</th>
+              </tr>
+            </thead>
+            <tbody>
         `;
 
         data.forEach(item => {
           tabela += `
             <tr>
-              <td>${item.veiculo}</td>
-              <td>${formatarValor(item.mensalidade)}</td>
-              <td>${formatarValor(item.franquia)}</td>
-              <td>${item.marca}</td>
-              <td>${item.tipo}</td>
+              <td data-label="VEÍCULO">${item.veiculo}</td>
+              <td data-label="MENSALIDADE (R$)">${formatarValor(item.mensalidade)}</td>
+              <td data-label="FRANQUIA (R$)">${formatarValor(item.franquia)}</td>
+              <td data-label="MARCA">${item.marca}</td>
+              <td data-label="TIPO">${item.tipo}</td>
             </tr>
           `;
         });
 
-        tabela += "</tbody></table></div>";
+        tabela += "</tbody></table>";
         divResultado.innerHTML = tabela;
-
         novaBuscaBtn.style.display = "block";
-
       } catch (erro) {
-        divResultado.innerHTML = `<p class='nenhum-resultado fade-in'>Erro ao buscar dados. Verifique a conexão.</p>`;
+        divResultado.innerHTML = `<p class='nenhum-resultado'>Erro ao buscar dados. Verifique a conexão.</p>`;
         novaBuscaBtn.style.display = "block";
       }
     }
@@ -328,7 +319,7 @@
       document.getElementById("alertaInfo").style.display = "none";
       document.getElementById("alertaCritico").style.display = "none";
       document.getElementById("novaBuscaBtn").style.display = "none";
-      document.getElementById("buscaContainer").style.display = "flex";
+      document.getElementById("buscaContainer").style.display = "block";
       document.getElementById("busca").focus();
     }
   </script>
