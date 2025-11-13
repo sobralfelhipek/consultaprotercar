@@ -146,35 +146,60 @@
     }
 
     /* 🔹 Ajustes responsivos para celular */
-    @media (max-width: 600px) {
-      table thead {
-        display: none;
-      }
+ /* 🔹 Ajustes responsivos para celular (mantém cabeçalhos principais) */
+@media (max-width: 600px) {
+  table thead th:first-child {
+    display: none; /* Oculta apenas o cabeçalho "VEÍCULO" */
+  }
 
-      table, table tbody, table tr, table td {
-        display: block;
-        width: 100%;
-      }
+  table td:first-child {
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    color: #ffdd55;
+    font-size: 1rem;
+    text-align: left !important;
+    background: transparent;
+    border: none;
+    padding: 10px 0 5px 0;
+  }
 
-      table tr {
-        margin-bottom: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.05);
-        padding: 10px;
-      }
+  table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
 
-      table td {
-        text-align: left !important;
-        padding: 6px 0;
-        border: none;
-        font-size: 0.95rem;
-      }
+  table tr {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    display: block;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
 
-      table td::before {
-        display: none;
-      }
-    }
+  table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    border: none;
+    padding: 4px 0;
+    font-size: 0.95rem;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    color: #ffdd55;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  table td:nth-child(2)::before { content: "Mensalidade:"; }
+  table td:nth-child(3)::before { content: "Franquia:"; }
+  table td:nth-child(4)::before { content: "Marca:"; }
+  table td:nth-child(5)::before { content: "Tipo:"; }
+}
+
   </style>
 </head>
 
