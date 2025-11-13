@@ -90,15 +90,15 @@
     }
 
     .alerta-info {
-      background-color: rgba(255, 255, 200, 0.15);
-      color: #fff4b2;
-      border: 1px solid rgba(255, 255, 200, 0.3);
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #f0ead1;
+      border: 1px solid rgba(255, 230, 200, 0.7);
     }
 
     .alerta-critico {
-      background-color: rgba(255, 100, 100, 0.15);
-      color: #ffbcbc;
-      border: 1px solid rgba(255, 150, 150, 0.3);
+      background-color: rgba(255, 230, 200, 0.15);
+      color: #f0ead1;
+      border: 1px solid rgba(255, 150, 150, 0.7);
     }
 
     table {
@@ -146,37 +146,38 @@
     }
 
     /* 🔹 Ajustes responsivos para celular */
- /* 🔹 Ajustes responsivos para celular (mantém cabeçalhos principais) */
 @media (max-width: 600px) {
-  table thead th:first-child {
-    display: none; /* Oculta apenas o cabeçalho "VEÍCULO" */
-  }
-
-  table td:first-child {
-    display: block;
-    width: 100%;
-    font-weight: bold;
-    color: #ffdd55;
-    font-size: 1rem;
-    text-align: left !important;
-    background: transparent;
-    border: none;
-    padding: 10px 0 5px 0;
+  /* Remove o cabeçalho fixo apenas no modo mobile */
+  table thead {
+    display: none;
   }
 
   table {
+    width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
   }
 
   table tr {
+    display: block;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    display: block;
-    padding: 10px;
     margin-bottom: 15px;
+    padding: 10px;
   }
 
+  /* O nome do veículo aparece em destaque no topo do bloco */
+  table td:first-child {
+    display: block;
+    font-weight: bold;
+    color: #d6d2c1;
+    font-size: 1.1rem;
+    text-align: left !important;
+    margin-bottom: 8px;
+    border: none;
+  }
+
+  /* As demais informações aparecem abaixo com seus rótulos */
   table td {
     display: flex;
     justify-content: space-between;
@@ -188,18 +189,18 @@
   }
 
   table td::before {
-    content: attr(data-label);
     color: #ffdd55;
     font-weight: 500;
     text-transform: uppercase;
   }
 
+  /* Define os rótulos para cada campo */
   table td:nth-child(2)::before { content: "Mensalidade:"; }
   table td:nth-child(3)::before { content: "Franquia:"; }
   table td:nth-child(4)::before { content: "Marca:"; }
   table td:nth-child(5)::before { content: "Tipo:"; }
 }
-
+    
   </style>
 </head>
 
