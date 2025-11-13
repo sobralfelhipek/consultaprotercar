@@ -4,110 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consulta de Veículos - PROTERCAR</title>
-
   <style>
+    /* ======= ESTILO GERAL ======= */
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      color: #ffcc00;
-      background: linear-gradient(to bottom, #ffffff, #ffcccc, #ff0000);
-      background-attachment: fixed;
+      background: linear-gradient(to bottom, #ffffff 0%, #ff2a2a 35%, #990000 100%);
+      color: #ffdd55;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      background: linear-gradient(to bottom, #fff, #ffd6d6, #ff4d4d);
+      background: linear-gradient(to bottom, #ffffff 0%, #ffdddd 100%);
       text-align: center;
-      padding: 30px 10px 10px 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      padding: 30px 10px 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
     header img {
-      max-width: 260px;
+      max-width: 280px;
       height: auto;
     }
 
     main {
+      flex: 1;
       max-width: 900px;
-      margin: 40px auto;
-      background: rgba(0, 0, 0, 0.75);
+      margin: 30px auto;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
       padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      color: #ffcc00;
-      position: relative;
-      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
     }
 
     h1 {
       text-align: center;
-      font-size: 1.8rem;
       color: #fff;
       margin-bottom: 25px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      font-size: 1.8rem;
     }
 
     input {
       width: 100%;
       padding: 12px;
       border-radius: 8px;
-      border: 1px solid #ffcc00;
-      background-color: #1a1a1a;
-      color: #fff;
+      border: none;
       font-size: 1rem;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       box-sizing: border-box;
     }
 
     button {
-      background-color: #ff0000;
+      width: 100%;
+      background-color: #ff2a2a;
       color: #fff;
       border: none;
-      padding: 12px 18px;
+      padding: 12px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 1rem;
-      transition: 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #cc0000;
+      background-color: #ff4444;
       transform: scale(1.03);
     }
 
-    #novaBuscaBtn {
+    #novaBusca {
       display: none;
-      background-color: #ffcc00;
+      background-color: #ffaa00;
       color: #000;
-      margin-top: 10px;
-      font-weight: bold;
+      margin-top: 15px;
     }
 
     .alerta {
       padding: 15px;
       border-radius: 10px;
-      margin: 20px 0;
-      display: none;
+      margin-bottom: 20px;
       font-weight: 500;
+      display: none;
     }
 
     .alerta-info {
-      background-color: rgba(255, 255, 0, 0.1);
-      border: 1px solid #ffcc00;
-      color: #fff;
+      background-color: rgba(255, 255, 200, 0.15);
+      color: #fff4b2;
+      border: 1px solid rgba(255, 255, 200, 0.3);
     }
 
     .alerta-critico {
-      background-color: rgba(255, 0, 0, 0.15);
-      border: 1px solid #ff6666;
-      color: #fff;
+      background-color: rgba(255, 100, 100, 0.15);
+      color: #ffbcbc;
+      border: 1px solid rgba(255, 150, 150, 0.3);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 25px;
+      margin-top: 20px;
+      color: #fff;
     }
 
     th, td {
@@ -122,78 +120,59 @@
     }
 
     th {
-      background-color: rgba(255, 0, 0, 0.8);
+      background-color: rgba(255, 0, 0, 0.7);
       color: #fff;
-      text-transform: uppercase;
     }
 
     td {
       background-color: rgba(255, 255, 255, 0.05);
-      color: #ffcc00;
     }
 
     .nenhum-resultado {
       text-align: center;
-      color: #fff;
+      color: #ffdd55;
       margin-top: 20px;
       font-style: italic;
     }
 
-    .loader {
-      border: 4px solid rgba(255, 255, 255, 0.2);
-      border-left-color: #ffcc00;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
+    footer {
+      text-align: center;
+      color: #ffdd55;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      background: linear-gradient(to top, rgba(255, 0, 0, 0.3), transparent);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 40px;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* --- RESPONSIVIDADE --- */
-    @media (max-width: 768px) {
-      main {
-        padding: 20px 10px;
-      }
-
-      table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        border-radius: 10px;
-        scrollbar-width: thin;
-        scrollbar-color: #ffcc00 transparent;
-      }
-
-      thead {
+    /* 🔹 Ajustes responsivos para celular */
+    @media (max-width: 600px) {
+      table thead {
         display: none;
       }
 
-      tr {
+      table, table tbody, table tr, table td {
         display: block;
+        width: 100%;
+      }
+
+      table tr {
         margin-bottom: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.05);
         padding: 10px;
       }
 
-      td {
-        display: flex;
-        justify-content: space-between;
+      table td {
         text-align: left !important;
-        padding: 8px;
-        font-size: 0.9rem;
+        padding: 6px 0;
         border: none;
+        font-size: 0.95rem;
       }
 
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #ffcc00;
+      table td::before {
+        display: none;
       }
     }
   </style>
@@ -207,15 +186,11 @@
   <main>
     <h1>Consulta de Veículos</h1>
 
-    <div id="buscaContainer">
-      <input type="text" id="busca" placeholder="Digite o modelo do veículo (ex: Voyage 2015)" />
-      <button onclick="buscar()">Buscar</button>
-    </div>
+    <input type="text" id="busca" placeholder="Digite o modelo do veículo (ex: Argo 2010)" />
+    <button id="btnBuscar" onclick="buscar()">Buscar</button>
+    <button id="novaBusca" onclick="novaBusca()">Nova busca</button>
 
-    <div style="display: flex; justify-content: flex-end;">
-      <button id="novaBuscaBtn" onclick="novaBusca()">Nova busca</button>
-    </div>
-
+    <!-- ALERTAS -->
     <div id="alertaInfo" class="alerta alerta-info">
       ⚠️ <b>Informativo:</b><br>
       Não trabalhamos com carro a diesel.<br>
@@ -227,8 +202,14 @@
       O serviço de rastreamento é incluso para veículos tabela FIPE acima de 30 mil, mediante análise interna e não deve ser cobrado separadamente.
     </div>
 
+    <!-- RESULTADOS -->
     <div id="resultado"></div>
   </main>
+
+  <footer>
+    © Desenvolvido por <strong>Felhipe Sobral</strong><br>
+    2025 - Todos os direitos reservados ©
+  </footer>
 
   <script>
     const url = "https://script.google.com/macros/s/AKfycbxzsQWW99_JoAHoxiRm3uQXcOJ7tk8g1ueij2LUBEM2eXQdmrSf0a2Tp9IfadgH7_4E/exec?busca=";
@@ -243,8 +224,8 @@
       const divResultado = document.getElementById("resultado");
       const alertaInfo = document.getElementById("alertaInfo");
       const alertaCritico = document.getElementById("alertaCritico");
-      const novaBuscaBtn = document.getElementById("novaBuscaBtn");
-      const buscaContainer = document.getElementById("buscaContainer");
+      const novaBuscaBtn = document.getElementById("novaBusca");
+      const btnBuscar = document.getElementById("btnBuscar");
 
       divResultado.innerHTML = "";
       alertaInfo.style.display = "none";
@@ -256,60 +237,49 @@
         return;
       }
 
-      buscaContainer.style.display = "none";
-
-      divResultado.innerHTML = `
-        <div style="text-align:center; padding:20px;">
-          <div class="loader"></div>
-          <p>Buscando informações, aguarde...</p>
-        </div>
-      `;
-
       try {
         const resposta = await fetch(url + encodeURIComponent(termo));
         const data = await resposta.json();
 
         if (data[0].erro) {
           divResultado.innerHTML = `<p class='nenhum-resultado'>${data[0].erro}</p>`;
+        } else {
+          alertaInfo.style.display = "block";
+          alertaCritico.style.display = "block";
           novaBuscaBtn.style.display = "block";
-          return;
-        }
+          btnBuscar.style.display = "none";
 
-        alertaInfo.style.display = "block";
-        alertaCritico.style.display = "block";
-
-        let tabela = `
-          <table>
-            <thead>
-              <tr>
-                <th>VEÍCULO</th>
-                <th>MENSALIDADE (R$)</th>
-                <th>FRANQUIA (R$)</th>
-                <th>MARCA</th>
-                <th>TIPO</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        data.forEach(item => {
-          tabela += `
-            <tr>
-              <td data-label="VEÍCULO">${item.veiculo}</td>
-              <td data-label="MENSALIDADE (R$)">${formatarValor(item.mensalidade)}</td>
-              <td data-label="FRANQUIA (R$)">${formatarValor(item.franquia)}</td>
-              <td data-label="MARCA">${item.marca}</td>
-              <td data-label="TIPO">${item.tipo}</td>
-            </tr>
+          let tabela = `
+            <table>
+              <thead>
+                <tr>
+                  <th>VEÍCULO</th>
+                  <th>MENSALIDADE (R$)</th>
+                  <th>FRANQUIA (R$)</th>
+                  <th>MARCA</th>
+                  <th>TIPO</th>
+                </tr>
+              </thead>
+              <tbody>
           `;
-        });
 
-        tabela += "</tbody></table>";
-        divResultado.innerHTML = tabela;
-        novaBuscaBtn.style.display = "block";
+          data.forEach(item => {
+            tabela += `
+              <tr>
+                <td>${item.veiculo}</td>
+                <td>${formatarValor(item.mensalidade)}</td>
+                <td>${formatarValor(item.franquia)}</td>
+                <td>${item.marca}</td>
+                <td>${item.tipo}</td>
+              </tr>
+            `;
+          });
+
+          tabela += "</tbody></table>";
+          divResultado.innerHTML = tabela;
+        }
       } catch (erro) {
         divResultado.innerHTML = `<p class='nenhum-resultado'>Erro ao buscar dados. Verifique a conexão.</p>`;
-        novaBuscaBtn.style.display = "block";
       }
     }
 
@@ -318,9 +288,8 @@
       document.getElementById("resultado").innerHTML = "";
       document.getElementById("alertaInfo").style.display = "none";
       document.getElementById("alertaCritico").style.display = "none";
-      document.getElementById("novaBuscaBtn").style.display = "none";
-      document.getElementById("buscaContainer").style.display = "block";
-      document.getElementById("busca").focus();
+      document.getElementById("novaBusca").style.display = "none";
+      document.getElementById("btnBuscar").style.display = "block";
     }
   </script>
 </body>
