@@ -1,333 +1,207 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consulta de Veículos</title>
-  <style>
-    /* ======= ESTILO GERAL ======= */
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom, #ffffff 0%, #ff2a2a 35%, #990000 100%);
-      color: #ffdd55;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTERCAR - Consulta de Veículos</title>
 
-    header {
-      background: linear-gradient(to bottom, #ffffff 0%, #ffdddd 100%);
-      text-align: center;
-      padding: 30px 10px 15px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ffffff, #ff4d4d);
+            color: #ffd54a;
+            min-height: 100vh;
+        }
 
-    header img {
-      max-width: 280px;
-      height: auto;
-    }
+        header {
+            width: 100%;
+            padding: 25px 0;
+            background: linear-gradient(to bottom, #ffffff, #ff9999);
+            text-align: center;
+        }
 
-    main {
-      flex: 1;
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(6px);
-      padding: 30px;
-      border-radius: 14px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-    }
+        header img {
+            width: 220px;
+        }
 
-    h1 {
-      text-align: center;
-      color: #fff;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
-    }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      margin-bottom: 20px;
-      box-sizing: border-box;
-    }
+        #buscaContainer {
+            margin-top: 20px;
+        }
 
-    button {
-      width: 100%;
-      background-color: #ff2a2a;
-      color: #fff;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
+        #busca {
+            width: 80%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 18px;
+        }
 
-    button:hover {
-      background-color: #ff4444;
-      transform: scale(1.03);
-    }
+        button {
+            margin-top: 15px;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #ffcc00;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-    #novaBusca {
-      display: none;
-      background-color: #ffaa00;
-      color: #000;
-      margin-top: 15px;
-    }
+        #novaBuscaBtn {
+            display: none;
+            margin-bottom: 25px;
+        }
 
-    .alerta {
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      font-weight: 500;
-      display: none;
-    }
+        .resultados {
+            margin-top: 20px;
+        }
 
-    .alerta-info {
-      background-color: rgba(255, 255, 255, 0.15);
-      color: #f0ead1;
-      border: 1px solid rgba(255, 230, 200, 0.7);
-    }
+        .item {
+            background: rgba(0,0,0,0.25);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            text-align: left;
+        }
 
-    .alerta-critico {
-      background-color: rgba(255, 230, 200, 0.15);
-      color: #f0ead1;
-      border: 1px solid rgba(255, 150, 150, 0.7);
-    }
+        .item strong {
+            color: #ffffff;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      color: #fff;
-    }
+        .toggle-franquia {
+            background: #ffcc00;
+            color: #000;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 5px;
+        }
 
-    th, td {
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        .compartilhar {
+            background: #00e676;
+            color: #000;
+            margin-top: 10px;
+        }
 
-    td:first-child, th:first-child {
-      text-align: left;
-      padding-left: 20px;
-    }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #fff;
+            font-size: 14px;
+        }
 
-    th {
-      background-color: rgba(255, 0, 0, 0.7);
-      color: #fff;
-    }
-
-    td {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .nenhum-resultado {
-      text-align: center;
-      color: #ffdd55;
-      margin-top: 20px;
-      font-style: italic;
-    }
-
-    footer {
-      text-align: center;
-      color: #ffdd55;
-      padding: 20px 10px;
-      font-size: 0.9rem;
-      background: linear-gradient(to top, rgba(255, 0, 0, 0.3), transparent);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: 40px;
-    }
-
-    /* 🔹 Ajustes responsivos para celular */
-@media (max-width: 600px) {
-  /* Remove o cabeçalho fixo apenas no modo mobile */
-  table thead {
-    display: none;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-  }
-
-  table tr {
-    display: block;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    margin-bottom: 15px;
-    padding: 10px;
-  }
-
-  /* O nome do veículo aparece em destaque no topo do bloco */
-  table td:first-child {
-    display: block;
-    font-weight: bold;
-    color: #d6d2c1;
-    font-size: 1.1rem;
-    text-align: left !important;
-    margin-bottom: 8px;
-    border: none;
-  }
-
-  /* As demais informações aparecem abaixo com seus rótulos */
-  table td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: right;
-    border: none;
-    padding: 4px 0;
-    font-size: 0.95rem;
-  }
-
-  table td::before {
-    color: #ffdd55;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-
-  /* Define os rótulos para cada campo */
-  table td:nth-child(2)::before { content: "Mensalidade:"; }
-  table td:nth-child(3)::before { content: "Franquia:"; }
-  table td:nth-child(4)::before { content: "Marca:"; }
-  table td:nth-child(5)::before { content: "Tipo:"; }
-}
-    
-  </style>
+        @media (max-width: 600px) {
+            #busca {
+                width: 95%;
+            }
+            .item {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <img src="PR23.png" alt="Logomarca" />
-  </header>
 
-  <main>
-    <h1>Consulta de Veículos</h1>
+<header>
+    <img src="logo.png" alt="PROTERCAR">
+</header>
 
-    <input type="text" id="busca" placeholder="Veículo Ano (ex:Argo 2010 ou Biz 2018)" />
-    <button id="btnBuscar" onclick="buscar()">Buscar</button>
-    <button id="novaBusca" onclick="novaBusca()">Nova busca</button>
+<div class="container">
 
-    <!-- ALERTAS -->
-    <div id="alertaInfo" class="alerta alerta-info">
-      ⚠️ <b>Informativo:</b><br>
-      Não trabalhamos com carro a diesel.<br>
-      Em caso de carro reserva, <b>INFORMAR acréscimo de R$20,00</b> na parcela mensal.
+    <div id="buscaContainer">
+        <input type="text" id="busca" placeholder="Digite o veículo...">
+        <br>
+        <button onclick="buscar()">Buscar</button>
     </div>
 
-    <div id="alertaCritico" class="alerta alerta-critico">
-      🚫 <b>Observação:</b><br>
-      O serviço de rastreamento é incluso para veículos tabela FIPE acima de 30 mil, mediante análise interna e não deve ser cobrado separadamente.
-    </div>
+    <button id="novaBuscaBtn" onclick="novaBusca()">Nova Busca</button>
 
-    <!-- RESULTADOS -->
-    <div id="resultado"></div>
-  </main>
+    <div id="resultados" class="resultados"></div>
 
-  <footer>
-    © Desenvolvido por <strong>Felhipe Sobral</strong><br>
-    2025 - Todos os direitos reservados ©
-  </footer>
+</div>
 
-  <script>
-    const url = "https://script.google.com/macros/s/AKfycbxzsQWW99_JoAHoxiRm3uQXcOJ7tk8g1ueij2LUBEM2eXQdmrSf0a2Tp9IfadgH7_4E/exec?busca=";
+<footer>
+    © Desenvolvido por Felhipe Sobral<br>2025 - Todos os direitos reservados ©
+</footer>
 
-    function formatarValor(valor) {
-    if (!valor || isNaN(valor)) return valor;
-    return parseFloat(valor).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxzsQWW99_JoAHoxiRm3uQXcOJ7tk8g1ueij2LUBEM2eXQdmrSf0a2Tp9IfadgH7_4E/exec?busca=";
 
-  async function buscar() {
-    const campoBusca = document.getElementById("busca");
-    const termo = campoBusca.value.trim();
-    const divResultado = document.getElementById("resultado");
-    const alertaInfo = document.getElementById("alertaInfo");
-    const alertaCritico = document.getElementById("alertaCritico");
-    const novaBuscaBtn = document.getElementById("novaBusca");
-    const btnBuscar = document.getElementById("btnBuscar");
+function formatarValor(v) {
+    return parseFloat(v).toFixed(2).replace('.', ',');
+}
 
-    divResultado.innerHTML = "";
-    alertaInfo.style.display = "none";
-    alertaCritico.style.display = "none";
-    novaBuscaBtn.style.display = "none";
+function buscar() {
+    const termo = document.getElementById("busca").value.trim();
+    if (!termo) return;
 
-    if (!termo) {
-      divResultado.innerHTML = "<p class='nenhum-resultado'>Digite algo para buscar.</p>";
-      return;
+    fetch(API_URL + encodeURIComponent(termo))
+        .then(r => r.json())
+        .then(dados => mostrarResultados(dados));
+
+    document.getElementById("novaBuscaBtn").style.display = "block";
+    document.getElementById("buscaContainer").style.display = "none";
+}
+
+function novaBusca() {
+    document.getElementById("busca").value = "";
+    document.getElementById("resultados").innerHTML = "";
+    document.getElementById("buscaContainer").style.display = "block";
+    document.getElementById("novaBuscaBtn").style.display = "none";
+}
+
+function mostrarResultados(lista) {
+    const div = document.getElementById("resultados");
+    div.innerHTML = "";
+
+    if (lista.length === 0 || lista[0].erro) {
+        div.innerHTML = "<p>Nenhum veículo encontrado.</p>";
+        return;
     }
 
-    try {
-      const resposta = await fetch(url + encodeURIComponent(termo));
-      const data = await resposta.json();
+    lista.forEach(item => {
+        const icone = item.tipo.toLowerCase() === "carro" ? "🚗" : item.tipo.toLowerCase() === "moto" ? "🏍️" : "";
 
-      if (data[0].erro) {
-        divResultado.innerHTML = `<p class='nenhum-resultado'>${data[0].erro}</p>`;
-      } else {
-        alertaInfo.style.display = "block";
-        alertaCritico.style.display = "block";
-        novaBuscaBtn.style.display = "block";
-
-        // Oculta o campo de busca e o botão "Buscar"
-        campoBusca.style.display = "none";
-        btnBuscar.style.display = "none";
-
-        let tabela = `
-          <table>
-            <thead>
-              <tr>
-                <th>VEÍCULO</th>
-                <th>MENSALIDADE (R$)</th>
-                <th>FRANQUIA (R$)</th>
-                <th>MARCA</th>
-                <th>TIPO</th>
-              </tr>
-            </thead>
-            <tbody>
+        let bloco = document.createElement("div");
+        bloco.className = "item";
+        bloco.innerHTML = `
+            <strong>${icone} ${item.veiculo}</strong><br>
+            Mensalidade: R$ ${formatarValor(item.mensalidade)}<br><br>
+            Marca: ${item.marca}<br>
+            Tipo: ${item.tipo}<br><br>
+            <span class="toggle-franquia" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">Mostrar Franquia</span>
+            <div style="display:none; margin-top:8px;">Franquia: R$ ${formatarValor(item.franquia)}</div>
+            <button class="compartilhar" onclick='compartilharWhatsApp(${JSON.stringify(item)})'>Compartilhar no WhatsApp</button>
         `;
+        div.appendChild(bloco);
+    });
+}
 
-        data.forEach(item => {
-          tabela += `
-            <tr>
-              <td>${item.veiculo}</td>
-              <td>${formatarValor(item.mensalidade)}</td>
-              <td>${formatarValor(item.franquia)}</td>
-              <td>${item.marca}</td>
-              <td>${item.tipo}</td>
-            </tr>
-          `;
-        });
+function compartilharWhatsApp(item) {
+    const icone = item.tipo.toLowerCase() === "carro" ? "🚗" : item.tipo.toLowerCase() === "moto" ? "🏍️" : "";
 
-        tabela += "</tbody></table>";
-        divResultado.innerHTML = tabela;
-      }
-    } catch (erro) {
-      divResultado.innerHTML = `<p class='nenhum-resultado'>Erro ao buscar dados. Verifique a conexão.</p>`;
-    }
-  }
+    const msg = `${icone} *${item.veiculo}*
+Mensalidade: *R$ ${formatarValor(item.mensalidade)}*
 
-  function novaBusca() {
-    const campoBusca = document.getElementById("busca");
-    const btnBuscar = document.getElementById("btnBuscar");
-    const novaBuscaBtn = document.getElementById("novaBusca");
+Marca: *${item.marca}*
+Tipo: *${item.tipo}*`;
 
-    campoBusca.value = "";
-    document.getElementById("resultado").innerHTML = "";
-    document.getElementById("alertaInfo").style.display = "none";
-    document.getElementById("alertaCritico").style.display = "none";
-
-    // Reexibe o campo de busca e botão "Buscar"
-    campoBusca.style.display = "block";
-    btnBuscar.style.display = "block";
-    novaBuscaBtn.style.display = "none";
-  }
+    const url = "https://wa.me/?text=" + encodeURIComponent(msg);
+    window.open(url, "_blank");
+}
 </script>
+
 </body>
 </html>
